@@ -1,23 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useEffect } from "react";
+import AlphabetSelector from "./components/AlphabetSelector";
+import CountrySearch from "./components/CountrySearch";
+import CountriesList from "./components/CountriesList";
+import { fetchCountries } from "./countriesSlice";
+import { useDispatch } from "react-redux";
 
 function App() {
+  const dispatch = useDispatch();
+  // pretend to fetch the countries up front real fetch here
+  useEffect(() => dispatch(fetchCountries(["Afghanistan", "Zimbabwe"])));
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ display: "flex", flexFlow: "column" }}>
+      <CountrySearch />
+      <AlphabetSelector />
+      <CountriesList />
     </div>
   );
 }
