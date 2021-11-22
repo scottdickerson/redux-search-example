@@ -12,7 +12,7 @@ const CountriesList = () => {
       return state.countriesPage.countries.filter((country) =>
         country.toLowerCase().includes(searchCountriesString)
       );
-    }
+    } else return state.countriesPage.countries;
   });
 
   return (

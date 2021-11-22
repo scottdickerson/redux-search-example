@@ -12,6 +12,7 @@ const countriesSlice = createSlice({
     },
     selectLetter(state, action) {
       state.selectedLetter = action.payload;
+      delete state.searchString;
     },
     searchCountries(state, action) {
       if (!isEmpty(action.payload)) {
