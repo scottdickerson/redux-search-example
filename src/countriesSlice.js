@@ -3,17 +3,35 @@ import isEmpty from "lodash/isEmpty";
 
 const initialState = { countries: [], selectedLetter: "A", searchString: "" };
 
+/**
+ * state = {
+ * countries:
+ *  {
+ *    Afghanistan: { description: '', flag: ''},
+ *    Zimbabwe: { description: '', flag: ''}
+ *  },
+ *  selectedCountry: 'Afghanistan'
+ * }
+ *
+ * getCountryDetails(country) => countries[country]
+ */
+
 const countriesSlice = createSlice({
   name: "countries",
   initialState,
   reducers: {
+    // page startup
     fetchCountries(state, action) {
       state.countries = action.payload;
     },
+    // user selection
     selectLetter(state, action) {
       state.selectedLetter = action.payload;
-      delete state.searchString;
+      state.searchString = "";
+      // also clear country
+      delete state.selectedCountry;
     },
+    // user types search
     searchCountries(state, action) {
       if (!isEmpty(action.payload)) {
         state.searchString = action.payload;
@@ -23,7 +41,10 @@ const countriesSlice = createSlice({
         // or if clearing search reselect the letter a countries
         state.selectedLetter = "A";
       }
+      // also clear country
+      delete state.selectedCountry;
     },
+    // user clicks country tab
     selectCountry(state, action) {
       state.selectedCountry = action.payload;
     },

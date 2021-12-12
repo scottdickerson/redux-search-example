@@ -1,25 +1,37 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { selectCountry } from "../countriesSlice";
 import isEmpty from "lodash/isEmpty";
 const CountriesList = () => {
   const filteredCountries = useSelector((state) => {
     const selectedLetter = state.countriesPage.selectedLetter;
     const searchCountriesString = state.countriesPage.searchString;
     if (selectedLetter) {
-      return state.countriesPage.countries.filter((country) =>
-        country.startsWith(selectedLetter)
+      return Object.keys(state.countriesPage.countries).filter(
+        (
+          country // ["Afghanistan", "AAA","AAA2",..]
+        ) => country.startsWith(selectedLetter)
       );
     } else if (!isEmpty(searchCountriesString)) {
-      return state.countriesPage.countries.filter((country) =>
+      return Object.keys(state.countriesPage.countries).filter((country) =>
         country.toLowerCase().includes(searchCountriesString)
       );
-    } else return state.countriesPage.countries;
+    } else return Object.keys(state.countriesPage.countries);
   });
+  const dispatch = useDispatch();
 
   return (
     <div style={{ display: "flex", flexFlow: "row" }}>
       {filteredCountries.map((country) => (
         <div style={{ paddingRight: ".5rem" }}>
-          <div key={country}>{country}</div>
+          <button
+            key={country}
+            onClick={() => {
+              dispatch(selectCountry(country));
+              console.log("country selected", country);
+            }}
+          >
+            {country}
+          </button>
         </div>
       ))}
     </div>
