@@ -33,12 +33,13 @@ const countriesSlice = createSlice({
     },
     // user types search
     searchCountries(state, action) {
-      if (!isEmpty(action.payload)) {
-        state.searchString = action.payload;
-        // remove letter selection when searching
-        delete state.selectedLetter;
-      } else {
-        // or if clearing search reselect the letter a countries
+      console.log("searchin string", action.payload);
+      state.searchString = action.payload;
+      // remove letter selection when searching
+      delete state.selectedLetter;
+
+      // or if clearing search reselect the letter a countries
+      if (isEmpty(action.payload)) {
         state.selectedLetter = "A";
       }
       // also clear country
